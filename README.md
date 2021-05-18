@@ -1,41 +1,74 @@
-# Orb Project Template
+# Harbormaster CircleCI Orb - Project Generator
 
-[![CircleCI Build Status](https://circleci.com/gh/complexmathguy/harbormaster-circleci-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/complexmathguy/harbormaster-circleci-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/harbormaster/generator)](https://circleci.com/orbs/registry/orb/harbormaster/generator) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/complexmathguy/harbormaster-circleci-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
+![alt text](http://harbormaster.ai/wp-content/uploads/2021/03/captain_harbormaster-e1617238219491.png)
+
+The Harbormaster Orb is a simple, yet powerful way to leverage CircleCI to automate the generation of DevOps projects to produce fully functional applications that can be deployed to, tested, and run through your CircleCI pipeline.  Choose from a growing set of tech stacks.
+
+[Learn more ](http://docs.harbormaster.ai/) about Harbormaster.
+
+## High Level Overview
+![alt text](http://harbormaster.ai/wp-content/uploads/2021/04/harbormaster-orb-how-it-works.png)
+
+## Orb Declarations
+
+### Version
+    version: 2.1
+
+### Orb Declaration
+    orbs:
+    harbormaster/projectgenerator@2.1.4
+
+### Job Declaration
+    jobs:
+      generate-devops-project:
+        docker:
+          - image: 'circleci/node:latest'
+        steps:
+          - harbormaster/initialize:
+              api-token: "DsJqTpYht3LcKb80 or PUT_YOUR_API_TOKEN_HERE"
+          - harbormaster/generate_devops_project:
+              project-as-code-yaml-file: "src/examples/project.as.code/angular-project-as-code.yml"
+
+*Before proceeding, the following must be considered:*
+
+####Using Git
+**Username and Password**
+
+In order for Harbormaster to commit the generated project files to your Git repo, you must edit the project-as-code YAML file and 
+supply your username and password to the Git section.
+
+Keep in mind direct password usage on GitHub and Bitbucket will soon be deprecated, in favor of personal Git access tokens. 
+
+Repository:
+Be sure to create the repository before generating the project.
+
+####Using Docker
+If using Docker, in order for Harbormaster to push the Docker image created as part of the pipeline processing, be sure to apply the correct
+credentials and repo related information within the docker section of the project-as-code YAML file.
+
+####Harbormaster API Token
+A general purpose CircleCI user account has been created resulting in the user token above `DsJqTpYht3LcKb80`.  
+This CircleCI user token will work for project generation usage.  However, as mentioned previously, you will have to apply your Git
+username and password within your project-as-code YAML file.
+
+Instead consider registering at [platform.harbormaster.ai](platform.harbormaster.ai) to get your own API token and assign a personal Git access token to ensure uninterrupted secure Git commits by Harbormaster.
 
 
+#### Workflows
+	workflows:
+		version: 2
+		app-gen-workflow:
+			jobs:
+			- generate-devops-project
 
-A starter template for orb projects. Build, test, and publish orbs automatically on CircleCI with [Orb-Tools](https://circleci.com/orbs/registry/orb/circleci/orb-tools).
+## Project__as__Code YAML File Examples 
 
-Additional READMEs are available in each directory.
+To invoke project generation, one mandatory YAML file is required. It is known as a _Project-as-Code_ file. This file is referenced from the root of your Git repository since they are being accessed from the Orb.
 
+Visit [here](https://harbormaster.ai/harbormaster-project-generation/) to to learn about the Project-as-Code file content.
 
-
-## Resources
-
-[CircleCI Orb Registry Page](https://circleci.com/orbs/registry/orb/harbormaster/harbormaster-circleci-orb) - The official registry page of this orb for all versions, executors, commands, and jobs described.
-[CircleCI Orb Docs](https://circleci.com/docs/2.0/orb-intro/#section=configuration) - Docs for using and creating CircleCI Orbs.
-
-### How to Contribute
-
-We welcome [issues](https://github.com/complexmathguy/harbormaster-circleci-orb/issues) to and [pull requests](https://github.com/complexmathguy/harbormaster-circleci-orb/pulls) against this repository!
-
-### How to Publish
-* Create and push a branch with your new features.
-* When ready to publish a new production version, create a Pull Request from _feature branch_ to `master`.
-* The title of the pull request must contain a special semver tag: `[semver:<segement>]` where `<segment>` is replaced by one of the following values.
-
-| Increment | Description|
-| ----------| -----------|
-| major     | Issue a 1.0.0 incremented release|
-| minor     | Issue a x.1.0 incremented release|
-| patch     | Issue a x.x.1 incremented release|
-| skip      | Do not issue a release|
-
-Example: `[semver:major]`
-
-* Squash and merge. Ensure the semver tag is preserved and entered as a part of the commit message.
-* On merge, after manual approval, the orb will automatically be published to the Orb Registry.
+Visit [here](https://github.com/Harbormaster-AI/circle.ci.orb/tree/main/src/examples) to view all sample model and Project-as-Code YAML configuration files.
 
 
-For further questions/comments about this or other orbs, visit the Orb Category of [CircleCI Discuss](https://discuss.circleci.com/c/orbs).
-
+> Use one of the provided sample project-as-code examples as a starting point.  Fill it out and replace existing values with those relevant to your project, especially the Git and Docker related params.
+  
