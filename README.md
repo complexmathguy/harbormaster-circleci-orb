@@ -4,7 +4,7 @@
 
 The Harbormaster Orb is a simple, yet powerful way to leverage CircleCI to automate the generation of DevOps projects to produce fully functional applications that can be deployed to, tested, and run through your CircleCI pipeline.  Choose from a growing set of tech stacks.
 
-[Learn more ](http://docs.harbormaster.ai/) about Harbormaster.
+[Learn more ](http://docs.harbormaster.ai/) about Harbormaster. 
 
 ## High Level Overview
 ![alt text](http://harbormaster.ai/wp-content/uploads/2021/04/harbormaster-orb-how-it-works.png)
